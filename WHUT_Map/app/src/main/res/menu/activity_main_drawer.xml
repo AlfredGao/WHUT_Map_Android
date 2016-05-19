@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_mfs"
+            android:icon="@drawable/mapicon"
+            android:title="马房山校区电子地图" />
+        <item
+            android:id="@+id/nav_yjt"
+            android:icon="@drawable/mapicon"
+            android:title="余家头校区电子地图" />
+        <item
+            android:id="@+id/nav_infolist"
+            android:icon="@drawable/listicon"
+            android:title="校园位置信息列表" />
+        <item
+            android:id="@+id/nav_setting"
+            android:icon="@drawable/seticon"
+            android:title="设置" />
+    </group>
+
+
+
+</menu>
