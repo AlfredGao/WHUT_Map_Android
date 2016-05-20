@@ -2,9 +2,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.alfredgao.whut_map.mfsFragment">
+    tools:context="layout.mfsFragment">
 
     <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="MFS View" />
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/MFSmapView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:clickable="true"
+        android:layout_marginTop="45dp" />
 
+    <SearchView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchView"
+        android:layout_alignParentTop="true"
+        android:queryHint="搜索马房山校区内地址" />
 
 </RelativeLayout>
