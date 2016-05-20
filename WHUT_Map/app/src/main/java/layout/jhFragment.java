@@ -16,10 +16,10 @@ import com.example.alfredgao.whut_map.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class yjtFragment extends Fragment {
+public class jhFragment extends Fragment {
 
 
-    public yjtFragment() {
+    public jhFragment() {
         // Required empty public constructor
     }
 
@@ -27,12 +27,11 @@ public class yjtFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View map = inflater.inflate(R.layout.fragment_yjt, null);
-        MapView mapView = (MapView)map.findViewById(R.id.yjtmapView);
+        View map = inflater.inflate(R.layout.fragment_jh, null);
+        MapView mapView = (MapView)map.findViewById(R.id.jhmapView);
         final BaiduMap BMap = mapView.getMap();
-        final LatLng ne = new LatLng(30.6184580000,114.3690970000);
-        final LatLng sw = new LatLng(30.6075490000,114.3559280000);
+        final LatLng ne = new LatLng(30.5219880000,114.3523440000);
+        final LatLng sw = new LatLng(30.5174460000,114.3455520000);
         BMap.setOnMapLoadedCallback(new BaiduMap.OnMapLoadedCallback() {
             @Override
             public void onMapLoaded() {

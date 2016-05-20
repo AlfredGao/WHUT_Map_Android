@@ -7,6 +7,10 @@
             android:icon="@drawable/mapicon"
             android:title="马房山校区地图(东苑/西苑)" />
         <item
+            android:id="@+id/nav_jh"
+            android:icon="@drawable/mapicon"
+            android:title="鉴湖校区地图" />
+        <item
             android:id="@+id/nav_nh"
             android:icon="@drawable/mapicon"
             android:title="南湖新校区地图" />
