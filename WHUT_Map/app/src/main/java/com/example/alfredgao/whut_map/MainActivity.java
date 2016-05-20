@@ -23,11 +23,11 @@ import android.widget.Toast;
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.MapView;
 
-import layout.infoFragment;
-import layout.mfsFragment;
-import layout.nhFragment;
-import layout.setFragment;
-import layout.yjtFragment;
+//import layout.infoFragment;
+//import layout.mfsFragment;
+//import layout.nhFragment;
+//import layout.setFragment;
+//import layout.yjtFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -121,17 +121,17 @@ public class MainActivity extends AppCompatActivity
         Fragment myFrag = null;
         if (id == R.id.nav_mfs) {
             // Handle the camera action
-            myFrag = new mfsFragment();
+            //myFrag = new mfsFragment();
 
         } else if (id == R.id.nav_yjt) {
-            myFrag = new yjtFragment();
+            //myFrag = new yjtFragment();
 
         } else if (id == R.id.nav_nh) {
-            myFrag = new nhFragment();
+           // myFrag = new nhFragment();
         } else if (id == R.id.nav_infolist) {
-            myFrag = new infoFragment();
+            //myFrag = new infoFragment();
         } else if (id == R.id.nav_setting) {
-            myFrag = new setFragment();
+           // myFrag = new setFragment();
         }
 
         if (myFrag != null) {
