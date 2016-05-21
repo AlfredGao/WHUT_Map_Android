@@ -9,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,10 +21,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
+import com.baidu.location.Poi;
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.MyLocationData;
 
 //import layout.infoFragment;
+import java.util.List;
+
 import layout.jhFragment;
 import layout.mfsFragment;
 import layout.nhFragment;
@@ -32,7 +41,10 @@ import layout.yjtFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    private LocationClient mLocationClient = null;
+    private BDLocationListener myListener;
+    private BDLocation location;
+    private MyLocationData mLocdata;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,8 +75,99 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        //Location
+        LocationClientOption option = new LocationClientOption();
+        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
+        option.setOpenGps(true);
+        int span = 3000;
+        option.setScanSpan(span);
+        option.setLocationNotify(true);
+        option.setAddrType("all");
+        myListener = new MyLocationListener();
+        mLocationClient = new LocationClient(getApplicationContext());
+        mLocationClient.registerLocationListener(myListener);
+        mLocationClient.setLocOption(option);
+        mLocationClient.start();
+        //mLocationClient.requestLocation();
     }
 
+
+    public class MyLocationListener implements BDLocationListener {
+        @Override
+        public void onReceiveLocation(BDLocation bdLocation) {
+            System.out.print("GPS 测试");
+            if (bdLocation != null && bdLocation.getLocType() != BDLocation.TypeServerError) {
+                StringBuffer locationLog = new StringBuffer(256);
+                locationLog.append("时间: ");
+                locationLog.append(bdLocation.getTime());
+                locationLog.append("\n错误代码 ");
+                locationLog.append(bdLocation.getLocType());
+                locationLog.append("\n经度: ");
+                locationLog.append(bdLocation.getLatitude());
+                locationLog.append("\n纬度: ");
+                locationLog.append(bdLocation.getLongitude());
+                locationLog.append("\n半径: ");
+                locationLog.append(bdLocation.getRadius());
+                if (bdLocation.getLocType() == bdLocation.TypeGpsLocation) {
+                    locationLog.append("\n速度: ");
+                    locationLog.append(bdLocation.getSpeed());
+                    locationLog.append("\n卫星数目: ");
+                    locationLog.append(bdLocation.getSatelliteNumber());
+                    //locationLog.append(bdLocation.getAltitude());
+                    locationLog.append("\n高度: ");
+                    locationLog.append(bdLocation.getAltitude());
+                    locationLog.append("\n方向: ");
+                    locationLog.append(bdLocation.getDirection());
+                    locationLog.append("\n地址: ");
+                    locationLog.append(bdLocation.getAddress());
+                } else if (bdLocation.getLocType() == BDLocation.TypeNetWorkLocation) {// 网络定位结果
+                    locationLog.append("\naddr : ");
+                    locationLog.append(bdLocation.getAddrStr());
+                    //运营商信息
+                    locationLog.append("\noperationers : ");
+                    locationLog.append(bdLocation.getOperators());
+                    locationLog.append("\n描述 : ");
+                    locationLog.append("网络定位成功");
+                } else if (bdLocation.getLocType() == BDLocation.TypeOffLineLocation) {// 离线定位结果
+                    locationLog.append("\n描述 : ");
+                    locationLog.append("离线定位成功，离线定位结果也是有效的");
+                } else if (bdLocation.getLocType() == BDLocation.TypeServerError) {
+                    locationLog.append("\n描述 : ");
+                    locationLog.append("服务端网络定位失败，可以反馈IMEI号和大体定位时间到loc-bugs@baidu.com，会有人追查原因");
+                } else if (bdLocation.getLocType() == BDLocation.TypeNetWorkException) {
+                    locationLog.append("\n描述 : ");
+                    locationLog.append("网络不同导致定位失败，请检查网络是否通畅");
+                } else if (bdLocation.getLocType() == BDLocation.TypeCriteriaException) {
+                    locationLog.append("\n描述 : ");
+                    locationLog.append("无法获取有效定位依据导致定位失败，一般是由于手机的原因，处于飞行模式下一般会造成这种结果，可以试着重启手机");
+                }
+                locationLog.append("\n位置描述 : ");
+                locationLog.append(bdLocation.getLocationDescribe());// 位置语义化信息
+                List<Poi> list = bdLocation.getPoiList();// POI数据
+                if (list != null) {
+                    locationLog.append("\npoilist size = : ");
+                    locationLog.append(list.size());
+                    for (Poi p : list) {
+                        locationLog.append("\npoi= : ");
+                        locationLog.append(p.getId() + " " + p.getName() + " " + p.getRank());
+                    }
+                }
+                String showWeidu = String.valueOf(bdLocation.getLongitude());
+                Toast.makeText(getApplicationContext(),showWeidu , Toast.LENGTH_LONG).show();
+                String showJd = String.valueOf(bdLocation.getLatitude());
+                Toast.makeText(getApplicationContext(), showJd, Toast.LENGTH_LONG).show();
+                Log.i("WHUT_APP_LOC_TEST", locationLog.toString());
+
+            } else {
+                mLocationClient.requestLocation();
+            }
+            //nhFragment.this.location = bdLocation;
+
+
+        }
+    }
      class SDKReceiver extends BroadcastReceiver {
 
         @Override
@@ -132,7 +235,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_infolist) {
             //myFrag = new infoFragment();
         } else if (id == R.id.nav_setting) {
-            //myFrag = new setFragment();
+            myFrag = new setFragment();
         } else if (id == R.id.nav_jh) {
             myFrag = new jhFragment();
         }

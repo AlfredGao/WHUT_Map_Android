@@ -1,7 +1,8 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/side_nav_bar"
     tools:context="layout.setFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -10,4 +11,48 @@
         android:layout_height="match_parent"
         android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="清除地图缓存"
+        android:id="@+id/button"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="30dp"
+        android:background="#FFFFFF"/>
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="检查版本更新"
+        android:id="@+id/button2"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#FFFFFF"/>
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="信息反馈"
+        android:id="@+id/button3"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginTop="150dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#FFFFFF"/>
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="关于我们"
+        android:id="@+id/button4"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginTop="200dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#FFFFFF"/>
+
+</RelativeLayout>
