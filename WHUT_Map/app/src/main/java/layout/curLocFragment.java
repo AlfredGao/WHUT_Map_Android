@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+import android.widget.Button;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -46,11 +47,19 @@ public class curLocFragment extends Fragment {
         BMap = mapView.getMap();
         mLocationClient = new LocationClient(getActivity().getApplicationContext());
         mLocationClient.registerLocationListener(myListener);
-        mLocationClient.start();
+        Button bn = (Button)map.findViewById(R.id.curLocButton);
+        bn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity().getApplicationContext(), "正在获取当前位置...",Toast.LENGTH_LONG).show();
+                mLocationClient.start();
+            }
+        });
         setClientOption();
 
         return map;
     }
+
     public void setClientOption() {
         LocationClientOption option = new LocationClientOption();
         option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
@@ -121,9 +130,9 @@ public class curLocFragment extends Fragment {
                     }
                 }
                 String showWeidu = String.valueOf(bdLocation.getLongitude());
-                Toast.makeText(getActivity().getApplicationContext(),showWeidu , Toast.LENGTH_LONG).show();
+                //Toast.makeText(getActivity().getApplicationContext(),showWeidu , Toast.LENGTH_LONG).show();
                 String showJd = String.valueOf(bdLocation.getLatitude());
-                Toast.makeText(getActivity().getApplicationContext(), showJd, Toast.LENGTH_LONG).show();
+                //Toast.makeText(getActivity().getApplicationContext(), showJd, Toast.LENGTH_LONG).show();
                 Log.i("WHUT_APP_LOC_TEST", locationLog.toString());
                 //myLocFrag.
                 BMap.setMyLocationEnabled(true);
