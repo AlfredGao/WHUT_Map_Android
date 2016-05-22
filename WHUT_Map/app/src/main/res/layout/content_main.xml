@@ -11,13 +11,9 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.alfredgao.whut_map.MainActivity"
     tools:showIn="@layout/app_bar_main"
-    android:id="@+id/mainLayout">
+    android:id="@+id/mainLayout"
+    >
 
-    <com.baidu.mapapi.map.MapView
-        android:id="@+id/mainmapView"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:clickable="true"
-        android:layout_marginBottom="250dp" />
+
 
 </RelativeLayout>

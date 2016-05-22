@@ -3,6 +3,10 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/cur_loc"
+            android:icon="@drawable/mapicon"
+            android:title="首页" />
+        <item
             android:id="@+id/nav_mfs"
             android:icon="@drawable/mapicon"
             android:title="马房山校区地图(东苑/西苑)" />
