@@ -27,7 +27,9 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.Poi;
 import com.baidu.mapapi.SDKInitializer;
+import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 
 //import layout.infoFragment;
@@ -45,11 +47,13 @@ public class MainActivity extends AppCompatActivity
     private BDLocationListener myListener;
     private BDLocation location;
     private MyLocationData mLocdata;
+    private MapView mMapView = null;
+    private BaiduMap mainMap = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SDKInitializer.initialize(getApplicationContext());
-        //MapView mMapView = (MapView) findViewById(R.id.bmapView);
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -76,14 +80,16 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        mMapView = (MapView) findViewById(R.id.mainmapView);
+        mainMap = mMapView.getMap();
 
         //Location
         LocationClientOption option = new LocationClientOption();
         option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
         option.setOpenGps(true);
-        int span = 3000;
-        option.setScanSpan(span);
-        option.setLocationNotify(true);
+        //int span = 3000;
+        //option.setScanSpan(span);
+        //option.setLocationNotify(true);
         option.setAddrType("all");
         myListener = new MyLocationListener();
         mLocationClient = new LocationClient(getApplicationContext());
@@ -91,6 +97,10 @@ public class MainActivity extends AppCompatActivity
         mLocationClient.setLocOption(option);
         mLocationClient.start();
         //mLocationClient.requestLocation();
+
+
+
+
     }
 
 
@@ -159,6 +169,17 @@ public class MainActivity extends AppCompatActivity
                 String showJd = String.valueOf(bdLocation.getLatitude());
                 Toast.makeText(getApplicationContext(), showJd, Toast.LENGTH_LONG).show();
                 Log.i("WHUT_APP_LOC_TEST", locationLog.toString());
+                mainMap.setMyLocationEnabled(true);
+                MyLocationData locData = new MyLocationData.Builder().accuracy(bdLocation.getRadius())
+                        .direction(100).latitude(bdLocation.getLatitude())
+                        .longitude(bdLocation.getLongitude()).build();
+                mainMap.setMyLocationData(locData);
+
+
+                MyLocationConfiguration config = new MyLocationConfiguration(MyLocationConfiguration.LocationMode.COMPASS, true, null);
+                mainMap.setMyLocationConfigeration(config);
+                mainMap.setMapType(BaiduMap.MAP_TYPE_SATELLITE);
+                //mMapView.refreshDrawableState();
 
             } else {
                 mLocationClient.requestLocation();
