@@ -17,12 +17,15 @@
         android:clickable="true"
         android:layout_marginTop="45dp" />
 
-    <SearchView
+    <AutoCompleteTextView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/searchView3"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:queryHint="搜索马房山校区位置信息" />
+        android:layout_height="45dp"
+        android:id="@+id/mfsAutoComplete"
+        android:layout_gravity="center_horizontal|top"
+        android:hint="搜索东/西苑校区位置信息"
+        android:drawableLeft="@drawable/search"
+        android:completionThreshold="1"
+        android:textCursorDrawable="@null"
+        android:textColor="#4D4D4D" />
 
 </RelativeLayout>

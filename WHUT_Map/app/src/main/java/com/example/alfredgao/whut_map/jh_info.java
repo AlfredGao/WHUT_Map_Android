@@ -3,10 +3,11 @@ package com.example.alfredgao.whut_map;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * Created by AlfredGao on 5/22/16.
  */
-public class nh_info implements Serializable {
+public class jh_info implements Serializable {
     private double latitude;
 
     private double longtitude;
@@ -17,24 +18,24 @@ public class nh_info implements Serializable {
 
     public boolean isClicked;
 
-    public static List<nh_info> nh_info_list = new ArrayList<nh_info>();
+    public static List<jh_info> jh_info_list = new ArrayList<jh_info>();
 
     static {
-        nh_info_list.add(new nh_info(30.5179400000,114.3405800000,0,"新一教学楼", false ));
-        nh_info_list.add(new nh_info(30.5175240000,114.3417170000,0,"新二教学楼",false ));
-        nh_info_list.add(new nh_info(30.5185310000,114.3407690000,0,"新四教学楼",false ));
-        nh_info_list.add(new nh_info(30.5169670000,114.3358820000,0,"学子苑餐厅（南湖食堂）" ,false ));
-        nh_info_list.add(new nh_info(30.5173210000,114.3404010000,0,"博学广场" , false ));
-        nh_info_list.add(new nh_info(30.5159680000,114.3424080000,0,"理学院" , false));
-        nh_info_list.add(new nh_info(30.5153880000,114.3422740000,0,"力学楼" , false ));
+        jh_info_list.add(new jh_info(30.5187020000,114.3501520000,0,"鉴湖主教学楼", false ));
+        jh_info_list.add(new jh_info(30.5187100000,114.3495630000,0,"鉴湖一教学楼",false ));
+        jh_info_list.add(new jh_info(30.5184880000,114.3508750000,0,"鉴湖三教学楼",false ));
+        jh_info_list.add(new jh_info(30.5196740000,114.3484500000,0,"鉴湖学府超市" ,false ));
+        jh_info_list.add(new jh_info(30.5206070000,114.3506190000,0,"学海公寓" , false ));
+       // nh_info_list.add(new jh_info(30.5159680000,114.3424080000,0,"理学院" , false));
+       // nh_info_list.add(new jh_info(30.5153880000,114.3422740000,0,"力学楼" , false ));
         //nh_info_list.add(new nh_info(30.5179400000,114.3405800000,0,"新一教学楼" , false));
         //nh_info_list.add(new nh_info(30.5179400000,114.3405800000,0,"新一教学楼" , false ));
         //nh_info_list.add(new nh_info(30.5179400000,114.3405800000,0,"新一教学楼" , false));
     }
 
-    public nh_info() {}
+    public jh_info() {}
 
-    public nh_info(double latitude, double longtitude, int imgID, String build_name,boolean isClicked)
+    public jh_info(double latitude, double longtitude, int imgID, String build_name, boolean isClicked)
     {
         super();
         this.latitude = latitude;
