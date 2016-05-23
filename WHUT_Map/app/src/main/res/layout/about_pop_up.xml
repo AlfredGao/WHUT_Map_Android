@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="UI设计: 王婉莹 软件ZY1201"
+        android:id="@+id/textView"
+        android:textAlignment="center"
+        android:layout_marginTop="50dp" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="测试:王婉莹 软件ZY1201"
+        android:id="@+id/textView2"
+        android:textAlignment="center"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="编码:王婉莹,软件ZY1201"
+        android:id="@+id/textView3"
+        android:textAlignment="center"
+        android:layout_marginTop="10dp" />
+</LinearLayout>
