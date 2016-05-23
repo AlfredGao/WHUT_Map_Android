@@ -55,12 +55,23 @@ public class setFragment extends Fragment {
         });
 
         final Button clear_cache = (Button)map.findViewById(R.id.clear_cache_button);
+        try {
+            String cache_button_text = "清除地图缓存           " + DataCleanManager.getTotalSize(getActivity().getApplicationContext());
+            clear_cache.setText(cache_button_text);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         clear_cache.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
+                    String show = null;
                     String cacheSize = DataCleanManager.getTotalSize(getActivity().getApplicationContext());
-                    String show = "已成功清除缓存 " + cacheSize;
+                    if (cacheSize.charAt(0) == '0'){
+                        show = "当前缓存已为0, 无需清除";
+                    } else {
+                        show = "已成功清除缓存 " + cacheSize;
+                    }
                     DataCleanManager.clearAllCache(getActivity().getApplicationContext());
                     Toast.makeText(getActivity().getApplicationContext(), show, Toast.LENGTH_LONG).show();
                 } catch (Exception e) {

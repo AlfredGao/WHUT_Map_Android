@@ -20,7 +20,7 @@
     <SearchView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/searchView2"
+        android:id="@+id/nhSearchView"
         android:layout_gravity="center_horizontal|top"
         android:queryHint="搜索南湖校区位置信息" />
 
