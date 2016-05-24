@@ -11,14 +11,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/list_cell_buildname"
         android:text="Name"
-        android:textSize="30dp"
+        android:textSize="20dp"
         android:textColor="#000"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/list_cell_campusname"
         android:text="Name"
-        android:textSize="25dp"
+        android:textSize="18dp"
         android:textColor="#4D4D4D"/>
 
 </LinearLayout>
