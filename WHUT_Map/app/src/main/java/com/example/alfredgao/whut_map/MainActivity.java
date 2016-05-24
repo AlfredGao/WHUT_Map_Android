@@ -32,7 +32,7 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 
-//import layout.infoFragment;
+import layout.infoFragment;
 import java.util.List;
 
 import layout.curLocFragment;
@@ -261,7 +261,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_nh) {
             myFrag = new nhFragment();
         } else if (id == R.id.nav_infolist) {
-            //myFrag = new infoFragment();
+            myFrag = new infoFragment();
         } else if (id == R.id.nav_setting) {
             myFrag = new setFragment();
         } else if (id == R.id.nav_jh) {

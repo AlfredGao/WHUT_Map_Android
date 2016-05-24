@@ -69,8 +69,12 @@ public class setFragment extends Fragment {
                     String cacheSize = DataCleanManager.getTotalSize(getActivity().getApplicationContext());
                     if (cacheSize.charAt(0) == '0'){
                         show = "当前缓存已为0, 无需清除";
+                        String cache_button_text = "清除地图缓存           " + DataCleanManager.getTotalSize(getActivity().getApplicationContext());
+                        clear_cache.setText(cache_button_text);
                     } else {
                         show = "已成功清除缓存 " + cacheSize;
+                        String cache_button_text = "清除地图缓存           " + DataCleanManager.getTotalSize(getActivity().getApplicationContext());
+                        clear_cache.setText(cache_button_text);
                     }
                     DataCleanManager.clearAllCache(getActivity().getApplicationContext());
                     Toast.makeText(getActivity().getApplicationContext(), show, Toast.LENGTH_LONG).show();

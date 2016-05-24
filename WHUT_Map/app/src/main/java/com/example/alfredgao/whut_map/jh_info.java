@@ -16,6 +16,8 @@ public class jh_info implements Serializable {
 
     private String build_name;
 
+    public int campus_id;
+
     public boolean isClicked;
 
     public static List<jh_info> jh_info_list = new ArrayList<jh_info>();

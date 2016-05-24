@@ -1,12 +1,14 @@
 package layout;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -137,13 +139,19 @@ public class nhFragment extends Fragment {
                     LatLng pt = marker.getPosition();
                     selectWindow = new InfoWindow(selectLocationView, pt, -47);
                     BMap.showInfoWindow(selectWindow);
-
+                    hideKeyboard();
                 }
             }
         }
     });}
 
 
+    private void hideKeyboard(){
+        InputMethodManager imm = (InputMethodManager)getActivity()
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getActivity().getWindow().getDecorView()
+                .getWindowToken(), 0);
+    }
 
     private void setAutoComplete(){
         String[] autoCompleteAdapter = new String[] {
