@@ -43,7 +43,7 @@
         </activity>
         <activity android:name="layout.aboutus_pop_window" />
         <activity android:name="layout.info_back" />
-        <activity android:name=".info_clickeditem"></activity>
+        <activity android:name=".info_clickeditem"/>
     </application>
 
 </manifest>

@@ -1,5 +1,7 @@
 package com.example.alfredgao.whut_map;
 
+import android.graphics.drawable.Drawable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -33,9 +35,15 @@ public class info_clickeditem extends AppCompatActivity {
         mMapView = (MapView) findViewById(R.id.info_clickedmapView);
         BaiduMap BMap = mMapView.getMap();
 
-        Bundle bundle = this.getIntent().getExtras();
 
+
+
+
+        Bundle bundle = this.getIntent().getExtras();
         String name = bundle.getString("BuildName");
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(name);
+        //actionBar.setBackgroundDrawable();
         Double lat = bundle.getDouble("Latitude");
         Double lt = bundle.getDouble("Longtitude");
         LatLng point1 = new LatLng(lat, lt);

@@ -1,8 +1,10 @@
 package layout;
 
 
+import android.app.Application;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,6 +58,8 @@ public class curLocFragment extends Fragment {
             }
         });
         setClientOption();
+
+
 
         return map;
     }
