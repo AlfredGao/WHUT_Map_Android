@@ -17,15 +17,23 @@
         android:layout_gravity="center_horizontal|top"
         android:layout_marginTop="45dp" />
 
-    <AutoCompleteTextView
+    <SearchView
         android:layout_width="fill_parent"
-        android:layout_height="45dp"
-        android:id="@+id/jhAutoComplete"
+        android:layout_height="wrap_content"
+        android:id="@+id/info_searchView"
         android:layout_gravity="center_horizontal|top"
-        android:hint="搜索校园位置信息"
-        android:drawableLeft="@drawable/search"
-        android:completionThreshold="1"
-        android:textCursorDrawable="@null"
-        android:textColor="#4D4D4D" />
+        android:queryHint="搜索校园位置信息" />
+
+    <ListView
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="45dp"
+        android:background="#FFFFFF"
+        android:textColor="#4D4D4D"
+
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/info_searchView_Adapter" />
+
 
 </FrameLayout>
