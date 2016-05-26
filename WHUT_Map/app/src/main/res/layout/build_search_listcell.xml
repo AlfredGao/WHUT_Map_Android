@@ -11,5 +11,6 @@
         android:text="Name"
         android:textSize="18dp"
         android:textColor="#4D4D4D"
-        android:id="@+id/build_info_searchname" />
+        android:id="@+id/build_info_searchname"
+        android:layout_marginTop="10dp" />
 </LinearLayout>

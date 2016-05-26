@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -31,6 +35,7 @@ import com.example.alfredgao.whut_map.build_info_listadapter;
 import com.example.alfredgao.whut_map.campus_build_info;
 import com.example.alfredgao.whut_map.info_clickeditem;
 import com.example.alfredgao.whut_map.search_info_listadapter;
+import com.example.alfredgao.whut_map.searchResultActivity;
 
 
 
@@ -42,22 +47,23 @@ public class infoFragment extends Fragment implements SearchView.OnQueryTextList
             "鉴湖一教学楼",
             "鉴湖三教学楼",
             "鉴湖学府超市",
-            "学海公寓",
-            "武汉理工大学西区足球场",
-            "西院教1楼",
-            "资源与环境工程学院",
+            "学海公寓(鉴湖校区)",
+            "武汉理工大学西苑足球场",
+            "西苑教1楼",
+            "资源与环境工程学院(西苑校区)",
             "武汉理工大学活动中心",
             "武汉理工大学网球场",
-            "西院图书馆",
-            "新一教学楼",
-            "新二教学楼",
-            "新四教学楼",
+            "西苑图书馆",
+            "南湖新一教学楼",
+            "南湖新二教学楼",
+            "南湖新四教学楼",
             "学子苑餐厅（南湖食堂）",
-            "博学广场",
-            "理学院",
-            "力学楼"};
+            "南湖博学广场",
+            "理学院(南湖校区)",
+            "力学楼(南湖校区)"};
     private ListView info_searchAdapter;
     private SearchView info_search;
+
     public infoFragment() {
         // Required empty public constructor
     }
@@ -74,6 +80,8 @@ public class infoFragment extends Fragment implements SearchView.OnQueryTextList
         build_info_listadapter adapter = new build_info_listadapter(getActivity().getApplicationContext(),mList);
         info_list_view.setAdapter(adapter);
 
+
+        //设置信息列表的点击监听事件,点击后跳转至所点击选项的地图位置信息
         info_list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -82,9 +90,11 @@ public class infoFragment extends Fragment implements SearchView.OnQueryTextList
                 List<campus_build_info> list = campus_build_info.campus_build_infoList;
                 for(campus_build_info info:list){
                     if (info.getKey() == key){
+                        //通过Bundle进行安卓页面之间的参数传递
                         Intent intent = new Intent(getActivity(),info_clickeditem.class);
-
                         Bundle bundle = new Bundle();
+
+                        //将所点击选项的建筑名称,精度,纬度传递到新的地图页面.
                         String name = info.getBuild_name();
                         Double lat = info.getMarkerLatitude();
                         Double lt = info.getMarkerLongtitude();
@@ -93,7 +103,7 @@ public class infoFragment extends Fragment implements SearchView.OnQueryTextList
                         bundle.putDouble("Longtitude",lt);
 
                         intent.putExtras(bundle);
-
+                        //启动页面
                         startActivity(intent);
                     }
                 }
@@ -110,23 +120,45 @@ public class infoFragment extends Fragment implements SearchView.OnQueryTextList
         return view;
     }
 
+
+    //此函数是监听用户时候点击键盘的搜索按键,点击则进行查询算法操作.次函数的参数query为搜索框中进行搜索的文字.
     @Override
     public boolean onQueryTextSubmit(String query) {
-        ArrayList<Integer> queryResult = new ArrayList<>();
-        HashMap<String, Integer> showResult = new HashMap<>();
+        //ArrayList<Integer> queryResult = new ArrayList<>();
+        HashMap<String, Double> showResult = new HashMap<>();
+
+        /*搜索排序主要有三步骤:
+        *每个建筑名称字符串长度为L1,用户输入的查询字符串长度为L2
+        * 1.对于每一个所存储的建筑名称用minDistance函数(内封装Edit Distance算法)计算得到搜索框中的文字与建筑名称的差距度d(最小修改步骤数),
+        *   再用公式(L1 - d)/L2计算得到每一个查询结果的权重值queryValue
+        *
+        * 2.再用adjustKeyWordWeight函数进行权重调整,用来修正模糊查询排序
+        *
+        * 3.filterQueryValue函数用来筛选符合一定条件的权重值的搜索结果并进行排序返回给用户
+        *
+        * 排序算法的数据结构为TreeMap 作为一种AVL平衡二叉树, 排序时间复杂度为Olgn*/
         for (String target:mStrings){
-            int queryValue = minDistance(query , target);
-            showResult.put(target,queryValue);
-            queryResult.add(queryValue);
-            Collections.sort(queryResult);
+            double queryValue = ((double)target.length()-(double)minDistance(query , target))/(double)query.length();
+            queryValue = adjustKeyWordWeight(target,query,queryValue);
+            filterQueryValue(target,query,queryValue,showResult);
+           // queryResult.add(queryValue);
+           // Collections.sort(queryResult);
         }
-        Log.i("Query Test" , String.valueOf(queryResult));
 
-        for (Integer value: queryResult){
 
-        }
+        /*得到搜索结果之后,存入哈希表内并且将值传到搜索结果页面(searchResultActivity)*/
+        Intent intent = new Intent(getActivity(),searchResultActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("result_HashMap",showResult);
+        intent.putExtras(bundle);
+        startActivity(intent);
+//        Log.i("Query Test" , String.valueOf(queryResult));
+//
         return true;
     }
+
+
+
     //Edit Distance 搜索算法
     public int minDistance(String word1, String word2) {
         //int Max = Integer.MIN_VALUE;
@@ -161,17 +193,70 @@ public class infoFragment extends Fragment implements SearchView.OnQueryTextList
         return distance[word1.length()][word2.length()];
     }
 
+    /*筛选符合一定范围的权重值的搜索结果,对于用户每个可能输入的查询字符串的长度进行概率估计,确保用户搜索结果的精度*/
+    public void filterQueryValue(String target,String query, Double queryValue, HashMap<String, Double> ShowResult){
+         int queryLength = query.length();
+        if (queryLength <= 1 && queryValue >= 1.0){
+            ShowResult.put(target, queryValue);
+        } else if (queryLength == 2 && queryValue >= 0.7){
+            ShowResult.put(target, queryValue);
+        } else if (queryLength == 3 && queryValue >= 0.8) {
+            ShowResult.put(target, queryValue);
+        } else  if (queryLength == 4 && queryValue >= 0.8) {
+            ShowResult.put(target, queryValue);
+        } else if (queryLength == 5 && queryValue >= 0.9) {
+            ShowResult.put(target, queryValue);
+        } else if (queryLength == 6 && queryValue >= 0.9) {
+            ShowResult.put(target, queryValue);
+        } else if (queryLength > 6 && queryValue >= 0.9) {
+            ShowResult.put(target, queryValue);
+        }
+    }
+
+    /*调整权重,当用户搜索词包含"新","南","鉴","西"等关键词,并且搜索结果包含同样的关键词时增加权重值,使得包含关键字的搜索结果排序靠前
+     *当搜索结果全匹配时,调整权重使得结果被精确搜索捕捉器捕捉.*/
+    public Double adjustKeyWordWeight(String target, String query,Double queryValue){
+        if (containKeyWord(query)){
+            String keyWordQueyContain = findQueryKeyWord(query);
+            if (target.contains(keyWordQueyContain) && query.length() == target.length() && queryValue >= 1.0) {
+                queryValue += 10.0; //精确搜索匹配
+            }
+            else if (target.contains(keyWordQueyContain)){
+                queryValue += 0.2;
+            }
+        }
+        return queryValue;
+    }
+
+    public String findQueryKeyWord(String query){
+        if (query.contains("西")){
+            return "西";
+        } else if (query.contains("鉴")) {
+            return "鉴";
+        } else if(query.contains("南")){
+            return "南";
+        } else if (query.contains("新")){
+            return "新";
+        }
+        return null;
+    }
+
+    public boolean containKeyWord(String s){
+        return s.contains("西") || s.contains("鉴") || s.contains("南") || s.contains("新");
+    }
+
+
 
     @Override
     public boolean onQueryTextChange(String newText) {
         Log.i("Search Test",newText);
 
         if (newText.length() > 0){
-            //初始化自动补全字典树数据结构
+            /*初始化自动补全数据结构字典树*/
             Trie trie = new Trie();
             List<String> mList = new ArrayList<>();
             List<String> resultList = new ArrayList<>();
-
+            /*将所有结果添加到字典树之内*/
             for(String s:mStrings){
                 mList.add(s);
                 trie.insert(s);
@@ -179,9 +264,10 @@ public class infoFragment extends Fragment implements SearchView.OnQueryTextList
 
             TrieNode tNode = trie.searchNode(newText);
             if (tNode != null) {
-                //HashMap<Character, TrieNode> hs = tNode.child;
-
+                /*获取所有与用户输入文字前缀相同的结果并存入数组中*/
                 resultList = trie.showSamePrefix(tNode);
+
+                /*调整显示格式*/
                 if (newText.length() > 1){
                     List<String> temp_list = new ArrayList<>();
                     for (String s: resultList){
@@ -197,6 +283,8 @@ public class infoFragment extends Fragment implements SearchView.OnQueryTextList
 
             //Log.i("Search Test",String.valueOf(info_searchAdapter));
            // Log.i("Search Test",String.valueOf(mList));
+
+            /*对于自动补全的列表设置点击事件响应,点击后搜索框自动补全搜索文字*/
             if (resultList != null && resultList.size() > 0){
                 search_info_listadapter adapter = new search_info_listadapter(getActivity().getApplicationContext(),resultList);
                 // Log.i("Search Test","pass1");
